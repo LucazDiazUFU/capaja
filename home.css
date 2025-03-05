@@ -1,0 +1,217 @@
+/* Mantém as cores e estilos já definidos */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    color: white;
+    display: flex;
+    position: relative;
+    overflow: hidden;
+    height: 100vh;
+}
+
+/* Adicionando vídeo de fundo responsivo */
+body::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #121212; /* Cor de fundo preta para garantir compatibilidade com video */
+    z-index: -1;
+}
+
+/* Vídeo de fundo */
+video.bg-video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -1; /* Garante que o vídeo fique atrás do conteúdo */
+}
+
+/* Menu lateral fixo */
+.menu {
+    width: 60px;
+    height: 100vh;
+    background: rgba(30, 30, 30, 0.7); /* Fundo transparente */
+    transition: width 0.3s;
+    overflow: hidden;
+    position: fixed;
+    z-index: 1; /* Para garantir que o menu fique sobre o vídeo */
+}
+
+.menu:hover {
+    width: 260px;
+}
+
+.menu-content {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.menu-content li {
+    padding: 15px;
+    margin: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.menu-content li:hover {
+    background: hsl(300, 99%, 37%);
+}
+
+.menu-content li span {
+    display: none;
+}
+
+.menu:hover .menu-content li span {
+    display: inline;
+    margin-left: 10px;
+}
+
+/* Responsividade ajustada */
+.parent {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    grid-auto-rows: minmax(100px, auto);
+    gap: 20px;
+    margin-left: 80px;
+}
+
+/* Estilização do container central */
+.content {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* Caixa de formulário */
+.form-container {
+    text-align: center;
+    width: 100%;
+    max-width: 400px;
+}
+
+.form-box {
+    background: #1e1e1e;
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+h2 {
+    margin-bottom: 20px;
+}
+
+/* Campos de entrada */
+input {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: none;
+    border-radius: 5px;
+}
+
+/* Botão */
+button {
+    width: 100%;
+    padding: 10px;
+    background: hsl(300, 99%, 37%);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: hsl(300, 99%, 37%);
+}
+
+/* Links */
+p {
+    margin-top: 10px;
+}
+
+a {
+    color: hsl(300, 92%, 65%);
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Esconder o formulário de registro por padrão */
+.hidden {
+    display: none;
+}
+/* Adicionando um estilo para a grid de notícias */
+.news-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* 4 colunas */
+    gap: 20px;
+    margin-top: 30px;
+}
+
+.news-item {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    text-align: center;
+    transition: transform 0.3s ease;
+}
+
+.news-item:hover {
+    transform: translateY(-10px);
+}
+
+.news-image {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+
+.news-item h3 {
+    font-size: 1.5rem;
+    margin-top: 10px;
+}
+
+.news-item p {
+    font-size: 1rem;
+    color: #555;
+    margin-top: 10px;
+}
+
+.news-item a {
+    display: inline-block;
+    margin-top: 15px;
+    color: #007bff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.news-item a:hover {
+    text-decoration: underline;
+}
+
+/* Responsividade - para telas menores, reduzir para 2 colunas */
+@media (max-width: 768px) {
+    .news-grid {
+        grid-template-columns: repeat(2, 1fr); /* 2 colunas */
+    }
+}
+
+/* Para telas menores ainda (celulares), usar 1 coluna */
+@media (max-width: 480px) {
+    .news-grid {
+        grid-template-columns: 1fr; /* 1 coluna */
+    }
+}

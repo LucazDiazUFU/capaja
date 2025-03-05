@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notícias</title>
+    <link rel="stylesheet" href="home.css"> <!-- Utilizando o mesmo CSS de home.css -->
+    <style>
+        /* Estilos para o botão de admin e o formulário de inserção de notícia */
+        .admin-button {
+            display: none;
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .admin-button:hover {
+            background-color: #0056b3;
+        }
+
+        .news-form {
+            display: none;
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #f4f4f4;
+            border-radius: 8px;
+        }
+
+        .news-form input, .news-form textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .news-form textarea {
+            height: 150px;
+        }
+
+        .news-form button {
+            padding: 10px 20px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .news-form button:hover {
+            background-color: #218838;
+        }
+
+        /* Toolbar for text formatting */
+        .toolbar {
+            display: flex;
+            margin-bottom: 10px;
+        }
+
+        .toolbar button {
+            margin-right: 10px;
+            padding: 5px 10px;
+            background-color: #f1f1f1;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .toolbar button:hover {
+            background-color: #ddd;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Vídeo de Fundo -->
+    <video class="bg-video" autoplay muted loop>
+        <source src="video.mp4" type="video/mp4">
+        Seu navegador não suporta o vídeo.
+    </video>
+
+    <!-- Menu lateral -->
+    <div class="menu">
+        <ul class="menu-content">
+            <li><a href="index.html"><span>🏠 Home</span></a></li>
+            <li><span>📰 Notícias</span></li> <!-- Este é a página atual -->
+            <li><span>📂 Projects</span></li>
+            <li><span>⚙️ Settings</span></li>
+            <li><span>👤 Account</span></li>
+            <li><span>📄 Reports</span></li>
+            <li><span>🔄 Logout</span></li>
+        </ul>
+    </div>
+
+    <!-- Container Central -->
+    <div class="content">
+        <h2>Notícias Recentes</h2>
+
+        <!-- Grid de Notícias -->
+        <div class="news-grid">
+            <!-- Notícia 1 -->
+            <div class="news-item">
+                <img src="imagem1.jpg" alt="Notícia 1" class="news-image">
+                <h3>Notícia 1: Novo projeto lançado!</h3>
+                <p>Detalhes sobre o novo projeto lançado pela equipe. Este projeto visa melhorar a experiência do usuário...</p>
+                <a href="#">Leia mais...</a>
+            </div>
+
+            <!-- Notícia 2 -->
+            <div class="news-item">
+                <img src="imagem2.jpg" alt="Notícia 2" class="news-image">
+                <h3>Notícia 2: Mudanças nas configurações de conta.</h3>
+                <p>Alterações significativas foram feitas nas configurações de conta. Confira como isso impacta seus dados...</p>
+                <a href="#">Leia mais...</a>
+            </div>
+
+            <!-- Notícia 3 -->
+            <div class="news-item">
+                <img src="imagem3.jpg" alt="Notícia 3" class="news-image">
+                <h3>Notícia 3: Novos relatórios disponíveis.</h3>
+                <p>A nova versão dos relatórios foi lançada, trazendo recursos adicionais para análise de dados...</p>
+                <a href="#">Leia mais...</a>
+            </div>
+
+            <!-- Notícia 4 -->
+            <div class="news-item">
+                <img src="imagem4.jpg" alt="Notícia 4" class="news-image">
+                <h3>Notícia 4: Atualização no sistema de segurança.</h3>
+                <p>Confira as novas melhorias feitas no sistema de segurança, garantindo uma navegação mais segura...</p>
+                <a href="#">Leia mais...</a>
+            </div>
+        </div>
+
+        <!-- Botão para Admin Inserir Notícia -->
+        <button class="admin-button" id="adminButton">Adicionar Notícia</button>
+
+        <!-- Formulário de Inserção de Notícia (visível apenas para o admin) -->
+        <div class="news-form" id="newsForm">
+            <div class="toolbar">
+                <button onclick="document.execCommand('bold')"><strong>B</strong></button>
+                <button onclick="document.execCommand('italic')"><em>I</em></button>
+                <button onclick="document.execCommand('underline')"><u>U</u></button>
+                <button onclick="document.execCommand('justifyLeft')">Alinhar Esquerda</button>
+                <button onclick="document.execCommand('justifyCenter')">Centralizar</button>
+                <button onclick="document.execCommand('justifyRight')">Alinhar Direita</button>
+            </div>
+
+            <input type="text" id="newsTitle" placeholder="Título da Notícia" required>
+            <input type="text" id="newsSubtitle" placeholder="Subtítulo" required>
+            <textarea id="newsContent" placeholder="Escreva o conteúdo da notícia..." required></textarea>
+            <input type="file" id="newsImage" accept="image/*">
+            <button type="submit" onclick="submitNews()">Publicar Notícia</button>
+        </div>
+    </div>
+
+    <script>
+        // Função para alternar entre Login e Registro
+        document.getElementById("showRegister").addEventListener("click", function () {
+            document.getElementById("loginBox").classList.add("hidden");
+            document.getElementById("registerBox").classList.remove("hidden");
+        });
+
+        document.getElementById("showLogin").addEventListener("click", function () {
+            document.getElementById("registerBox").classList.add("hidden");
+            document.getElementById("loginBox").classList.remove("hidden");
+        });
+
+        // Função para realizar o login
+        document.getElementById("loginForm").addEventListener("submit", function (e) {
+            e.preventDefault();
+
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
+
+            const adminEmail = "admincapaja@capaja.com";
+            const adminPassword = "admincapaja123";
+
+            // Verifica se as credenciais são corretas
+            if (email === adminEmail && password === adminPassword) {
+                // Esconde o login e exibe a home com as notícias
+                document.getElementById("loginBox").classList.add("hidden");
+                document.getElementById("newsBox").classList.remove("hidden");
+
+                // Mostrar o botão de admin
+                document.getElementById('adminButton').style.display = 'inline-block';
+            } else {
+                alert('Credenciais inválidas!');
+            }
+        });
+
+        // Função para submeter notícia
+        function submitNews() {
+            const title = document.getElementById('newsTitle').value;
+            const subtitle = document.getElementById('newsSubtitle').value;
+            const content = document.getElementById('newsContent').value;
+            const image = document.getElementById('newsImage').files[0];
+
+            // Aqui, em um cenário real, você poderia enviar esses dados para um servidor via AJAX
+            console.log('Notícia Enviada:', { title, subtitle, content, image });
+
+            alert('Notícia publicada com sucesso!');
+            // Limpar o formulário após o envio
+            document.getElementById('newsForm').reset();
+        }
+    </script>
+
+</body>
+</html>

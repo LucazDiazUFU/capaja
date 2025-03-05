@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - Login e Registro</title>
+    <link rel="stylesheet" href="home.css">
+</head>
+<body>
+
+    <!-- Vídeo de Fundo -->
+    <video class="bg-video" autoplay muted loop>
+        <source src="video.mp4" type="video/mp4">
+        Seu navegador não suporta o vídeo.
+    </video>
+
+    <!-- Menu lateral -->
+    <div class="menu">
+        <ul class="menu-content">
+            <li><span>🏠 Home</span></li>
+            <!-- Alterado "Dashboard" para "Notícias" com link para noticias.html -->
+            <li><a href="noticias.html"><span>📰 Notícias</span></a></li>
+            <li><span>📂 Projects</span></li>
+            <li><span>⚙️ Settings</span></li>
+            <li><span>👤 Account</span></li>
+            <li><span>📄 Reports</span></li>
+            <li><span>🔄 Logout</span></li>
+        </ul>
+    </div>
+
+    <!-- Container Central -->
+    <div class="content">
+        <div class="form-container">
+            <div class="form-box" id="loginBox">
+                <h2>Login</h2>
+                <form id="loginForm">
+                    <input type="email" id="email" placeholder="Email" required>
+                    <input type="password" id="password" placeholder="Senha" required>
+                    <button type="submit">Entrar</button>
+                    <p>Não tem uma conta? <a href="#" id="showRegister">Registre-se</a></p>
+                </form>
+            </div>
+
+            <div class="form-box hidden" id="registerBox">
+                <h2>Registro</h2>
+                <form id="registerForm">
+                    <input type="text" placeholder="Nome" required>
+                    <input type="email" placeholder="Email" required>
+                    <input type="password" placeholder="Senha" required>
+                    <input type="password" placeholder="Confirmar Senha" required>
+                    <button type="submit">Registrar</button>
+                    <p>Já tem uma conta? <a href="#" id="showLogin">Faça login</a></p>
+                </form>
+            </div>
+        </div>
+
+        <!-- Área das Notícias (apenas visível após login) -->
+        <div class="news-box hidden" id="newsBox">
+            <h2>Últimas Notícias</h2>
+            <ul id="newsList">
+                <li>Notícia 1: Novo projeto lançado!</li>
+                <li>Notícia 2: Mudanças nas configurações de conta.</li>
+                <li>Notícia 3: Novos relatórios disponíveis.</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        // Dados do admin
+        const adminEmail = "admincapaja@capaja.com";
+        const adminPassword = "admincapaja123";
+
+        // Obtendo os elementos do formulário
+        const loginForm = document.getElementById('loginForm');
+        const loginBox = document.getElementById('loginBox');
+        const registerBox = document.getElementById('registerBox');
+        const newsBox = document.getElementById('newsBox');
+        const emailInput = document.getElementById('email');
+        const passwordInput = document.getElementById('password');
+
+        // Função para realizar o login
+        loginForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const email = emailInput.value;
+            const password = passwordInput.value;
+
+            // Verifica se as credenciais são corretas
+            if (email === adminEmail && password === adminPassword) {
+                // Exibe a home com notícias
+                loginBox.classList.add('hidden');
+                newsBox.classList.remove('hidden');
+            } else {
+                alert('Credenciais inválidas!');
+            }
+        });
+
+        // Função para exibir o formulário de registro
+        document.getElementById('showRegister').addEventListener('click', function() {
+            loginBox.classList.add('hidden');
+            registerBox.classList.remove('hidden');
+        });
+
+        // Função para exibir o formulário de login
+        document.getElementById('showLogin').addEventListener('click', function() {
+            registerBox.classList.add('hidden');
+            loginBox.classList.remove('hidden');
+        });
+    </script>
+
+</body>
+</html>
