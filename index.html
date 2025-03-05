@@ -5,6 +5,60 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home - Login e Registro</title>
     <link rel="stylesheet" href="home.css">
+
+    <!-- Importando o Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script>
+
+    <script>
+        // Configuração do Firebase
+        const firebaseConfig = {
+  apiKey: "AIzaSyC7AgBL1Jyf2vNgQMoOAFYh2wu0niIdBSY",
+  authDomain: "capaja-a44c2.firebaseapp.com",
+  projectId: "capaja-a44c2",
+  storageBucket: "capaja-a44c2.firebasestorage.app",
+  messagingSenderId: "744899935534",
+  appId: "1:744899935534:web:f9300863c509abcdb90ebf"
+};
+
+        // Inicializando o Firebase
+        const app = firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+
+        // Função para carregar as notícias do Firestore
+        function carregarNoticias() {
+            const newsList = document.getElementById('newsList');
+            db.collection("noticias").orderBy("timestamp", "desc").get()
+                .then((querySnapshot) => {
+                    newsList.innerHTML = ''; // Limpa a lista antes de adicionar as notícias
+                    querySnapshot.forEach((doc) => {
+                        const li = document.createElement('li');
+                        li.textContent = doc.data().titulo + ": " + doc.data().subtitulo;
+                        newsList.appendChild(li);
+                    });
+                })
+                .catch((error) => {
+                    console.error("Erro ao carregar notícias: ", error);
+                });
+        }
+
+        // Função para adicionar uma notícia ao Firestore
+        function adicionarNoticia(titulo, subtitulo) {
+            db.collection("noticias").add({
+                titulo: titulo,
+                subtitulo: subtitulo,
+                timestamp: firebase.firestore.FieldValue.serverTimestamp()
+            })
+            .then(() => {
+                carregarNoticias(); // Recarregar as notícias após adicionar
+                alert("Notícia adicionada com sucesso!");
+            })
+            .catch((error) => {
+                console.error("Erro ao adicionar notícia: ", error);
+            });
+        }
+    </script>
+
 </head>
 <body>
 
@@ -18,7 +72,6 @@
     <div class="menu">
         <ul class="menu-content">
             <li><span>🏠 Home</span></li>
-            <!-- Alterado "Dashboard" para "Notícias" com link para noticias.html -->
             <li><a href="noticias.html"><span>📰 Notícias</span></a></li>
             <li><span>📂 Projects</span></li>
             <li><span>⚙️ Settings</span></li>
@@ -58,9 +111,7 @@
         <div class="news-box hidden" id="newsBox">
             <h2>Últimas Notícias</h2>
             <ul id="newsList">
-                <li>Notícia 1: Novo projeto lançado!</li>
-                <li>Notícia 2: Mudanças nas configurações de conta.</li>
-                <li>Notícia 3: Novos relatórios disponíveis.</li>
+                <!-- As notícias serão carregadas aqui -->
             </ul>
         </div>
     </div>
@@ -90,6 +141,7 @@
                 // Exibe a home com notícias
                 loginBox.classList.add('hidden');
                 newsBox.classList.remove('hidden');
+                carregarNoticias(); // Carregar as notícias após login
             } else {
                 alert('Credenciais inválidas!');
             }
